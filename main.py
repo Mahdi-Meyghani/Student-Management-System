@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (QWidget, QApplication, QPushButton, QLineEdit, QComboBox, QLabel, QMainWindow,
-                             QTableWidget, QTableWidgetItem)
+                             QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout)
 from PyQt6.QtGui import QAction
 import sys
 import sqlite3
@@ -14,6 +14,7 @@ class MainWindow(QMainWindow):
         help_menu_bar = self.menuBar().addMenu("&Help")
 
         add_student_action = QAction("Add Student", self)
+        add_student_action.triggered.connect(self.insert_student)
         file_menu_bar.addAction(add_student_action)
 
         about_action = QAction("About", self)
@@ -36,6 +37,36 @@ class MainWindow(QMainWindow):
             for col_index, cell in enumerate(row):
                 self.table.setItem(row_index, col_index, QTableWidgetItem(str(cell)))
         conn.close()
+
+    def insert_student(self):
+        dialog = InsertDialog()
+        dialog.exec()
+
+
+class InsertDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Insert Student Data")
+        self.resize(300, 300)
+        vbox = QVBoxLayout()
+
+        name_line_edit = QLineEdit()
+        name_line_edit.setPlaceholderText("Name")
+        vbox.addWidget(name_line_edit)
+
+        courses = QComboBox()
+        course_names = ["Biology", "Math", "Astronomy", "Physics"]
+        courses.addItems(course_names)
+        vbox.addWidget(courses)
+
+        mobile_line_edit = QLineEdit()
+        mobile_line_edit.setPlaceholderText("Mobile No")
+        vbox.addWidget(mobile_line_edit)
+
+        submit_button = QPushButton("Submit")
+        vbox.addWidget(submit_button)
+
+        self.setLayout(vbox)
 
 
 app = QApplication(sys.argv)
