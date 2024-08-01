@@ -9,6 +9,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Student Management System")
+        self.resize(800, 600)
 
         file_menu_bar = self.menuBar().addMenu("&File")
         help_menu_bar = self.menuBar().addMenu("&Help")
