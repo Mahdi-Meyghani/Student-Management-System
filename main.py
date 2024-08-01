@@ -1,3 +1,4 @@
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QApplication, QPushButton, QLineEdit, QComboBox, QLabel, QMainWindow,
                              QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout)
 from PyQt6.QtGui import QAction
@@ -100,18 +101,26 @@ class SearchDialog(QDialog):
         self.setWindowTitle("Search Student")
         vbox = QVBoxLayout()
         self.resize(300, 300)
-        name_line_edit = QLineEdit()
-        name_line_edit.setPlaceholderText("Name")
-        vbox.addWidget(name_line_edit)
+        self.name_line_edit = QLineEdit()
+        self.name_line_edit.setPlaceholderText("Name")
+        vbox.addWidget(self.name_line_edit)
 
         search_button = QPushButton("Search")
+        search_button.clicked.connect(self.find_student)
         vbox.addWidget(search_button)
 
         self.setLayout(vbox)
 
+    def find_student(self):
+        name = self.name_line_edit.text().title()
+        items = window.table.findItems(name, Qt.MatchFlag.MatchFixedString)
+        for item in items:
+            window.table.item(item.row(), 1).setSelected(True)
 
-app = QApplication(sys.argv)
-window = MainWindow()
-window.load_data()
-window.show()
-sys.exit(app.exec())
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.load_data()
+    window.show()
+    sys.exit(app.exec())
