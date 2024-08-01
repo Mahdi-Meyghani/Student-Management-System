@@ -22,6 +22,9 @@ class MainWindow(QMainWindow):
         about_action = QAction("About", self)
         help_menu_bar.addAction(about_action)
 
+        search_action = QAction("Search", self)
+        edit_menu_bar.addAction(search_action)
+
         self.table = QTableWidget()
         self.table.setColumnCount(4)
         self.table.setHorizontalHeaderLabels(("Id", "Name", "Course", "Mobile No"))
