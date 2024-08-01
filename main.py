@@ -23,6 +23,7 @@ class MainWindow(QMainWindow):
         help_menu_bar.addAction(about_action)
 
         search_action = QAction("Search", self)
+        search_action.triggered.connect(self.search_student)
         edit_menu_bar.addAction(search_action)
 
         self.table = QTableWidget()
@@ -45,6 +46,10 @@ class MainWindow(QMainWindow):
 
     def insert_student(self):
         dialog = InsertDialog()
+        dialog.exec()
+
+    def search_student(self):
+        dialog = SearchDialog()
         dialog.exec()
 
 
@@ -87,6 +92,22 @@ class InsertDialog(QDialog):
         cur.close()
         conn.close()
         window.load_data()
+
+
+class SearchDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Search Student")
+        vbox = QVBoxLayout()
+        self.resize(300, 300)
+        name_line_edit = QLineEdit()
+        name_line_edit.setPlaceholderText("Name")
+        vbox.addWidget(name_line_edit)
+
+        search_button = QPushButton("Search")
+        vbox.addWidget(search_button)
+
+        self.setLayout(vbox)
 
 
 app = QApplication(sys.argv)
