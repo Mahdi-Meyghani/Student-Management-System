@@ -11,6 +11,12 @@ class MainWindow(QMainWindow):
         file_menu_bar = self.menuBar().addMenu("&File")
         help_menu_bar = self.menuBar().addMenu("&Help")
 
+        add_student_action = QAction("Add Student", self)
+        file_menu_bar.addAction(add_student_action)
+
+        about_action = QAction("About", self)
+        help_menu_bar.addAction(about_action)
+
 
 app = QApplication(sys.argv)
 window = MainWindow()
