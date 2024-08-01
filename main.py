@@ -50,23 +50,38 @@ class InsertDialog(QDialog):
         self.resize(300, 300)
         vbox = QVBoxLayout()
 
-        name_line_edit = QLineEdit()
-        name_line_edit.setPlaceholderText("Name")
-        vbox.addWidget(name_line_edit)
+        self.name_line_edit = QLineEdit()
+        self.name_line_edit.setPlaceholderText("Name")
+        vbox.addWidget(self.name_line_edit)
 
-        courses = QComboBox()
+        self.courses = QComboBox()
         course_names = ["Biology", "Math", "Astronomy", "Physics"]
-        courses.addItems(course_names)
-        vbox.addWidget(courses)
+        self.courses.addItems(course_names)
+        vbox.addWidget(self.courses)
 
-        mobile_line_edit = QLineEdit()
-        mobile_line_edit.setPlaceholderText("Mobile No")
-        vbox.addWidget(mobile_line_edit)
+        self.mobile_line_edit = QLineEdit()
+        self.mobile_line_edit.setPlaceholderText("Mobile No")
+        vbox.addWidget(self.mobile_line_edit)
 
         submit_button = QPushButton("Submit")
+        submit_button.clicked.connect(self.add_student)
         vbox.addWidget(submit_button)
 
         self.setLayout(vbox)
+
+    def add_student(self):
+        name = self.name_line_edit.text()
+        course = self.courses.currentText()
+        mobile = self.mobile_line_edit.text()
+
+        conn = sqlite3.connect("database.db")
+        cur = conn.cursor()
+        cur.execute("INSERT INTO students(name, course, mobile) VALUES (?, ?, ?)",
+                    (name, course, mobile))
+        conn.commit()
+        cur.close()
+        conn.close()
+        window.load_data()
 
 
 app = QApplication(sys.argv)
