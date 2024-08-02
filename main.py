@@ -168,6 +168,12 @@ class EditDialog(QDialog):
         cursor.close()
         conn.close()
         window.load_data()
+        self.close()
+
+        confirmation_box = QMessageBox()
+        confirmation_box.setWindowTitle("Updated")
+        confirmation_box.setText("The record has been updated successfully.")
+        confirmation_box.exec()
 
 
 class DeleteDialog(QDialog):
