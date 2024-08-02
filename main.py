@@ -183,7 +183,9 @@ class DeleteDialog(QDialog):
         yes_button = QPushButton("Yes")
         yes_button.clicked.connect(self.delete_student)
         layout.addWidget(yes_button)
+
         no_button = QPushButton("No")
+        no_button.clicked.connect(self.delete_window)
         layout.addWidget(no_button)
 
         self.setLayout(layout)
@@ -205,6 +207,9 @@ class DeleteDialog(QDialog):
         confirmation.setWindowTitle("Deleted")
         confirmation.setText("The record has been deleted successfully from the database.")
         confirmation.exec()
+
+    def delete_window(self):
+        self.close()
 
 
 class InsertDialog(QDialog):
