@@ -47,10 +47,10 @@ class MainWindow(QMainWindow):
 
         # Add StatusBar
         self.statusbar = QStatusBar()
-        self.setStatusBar(self.statusbar)
         self.table.cellClicked.connect(self.statusbar_widgets)
 
     def statusbar_widgets(self):
+        self.setStatusBar(self.statusbar)
         edit_button = QPushButton("Edit Record")
         edit_button.clicked.connect(self.edit_student)
 
@@ -91,6 +91,52 @@ class MainWindow(QMainWindow):
     def delete_student(self):
         dialog = DeleteDialog()
         dialog.exec()
+
+
+class EditDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Update Student Data")
+        self.resize(300, 300)
+        vbox = QVBoxLayout()
+
+        # Get index of the selected row
+        index = window.table.currentRow()
+
+        # Get the student name from selected row
+        name_student = window.table.item(index, 1).text()
+
+        self.name_line_edit = QLineEdit(name_student)
+        self.name_line_edit.setPlaceholderText("Name")
+        vbox.addWidget(self.name_line_edit)
+
+        # Get the course name from selected row
+        course_name = window.table.item(index, 2).text()
+
+        self.courses = QComboBox()
+        course_names = ["Biology", "Math", "Astronomy", "Physics"]
+        self.courses.addItems(course_names)
+        self.courses.setCurrentText(course_name)
+        vbox.addWidget(self.courses)
+
+        # Get the mobile text frm selected row
+        mobile = window.table.item(index, 3).text()
+
+        self.mobile_line_edit = QLineEdit(mobile)
+        self.mobile_line_edit.setPlaceholderText("Mobile No")
+        vbox.addWidget(self.mobile_line_edit)
+
+        submit_button = QPushButton("Update")
+        submit_button.clicked.connect(self.update_student)
+        vbox.addWidget(submit_button)
+
+        # Get the id text from selected row
+        self.id_num = window.table.item(index, 0).text()
+
+        self.setLayout(vbox)
+
+    def update_student(self):
+        pass
 
 
 class InsertDialog(QDialog):
@@ -156,10 +202,6 @@ class SearchDialog(QDialog):
         items = window.table.findItems(name, Qt.MatchFlag.MatchFixedString)
         for item in items:
             window.table.item(item.row(), 1).setSelected(True)
-
-
-class EditDialog(QDialog):
-    pass
 
 
 class DeleteDialog(QDialog):
