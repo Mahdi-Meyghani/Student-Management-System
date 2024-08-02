@@ -25,7 +25,7 @@ class MainWindow(QMainWindow):
         about_action = QAction("About", self)
         help_menu_bar.addAction(about_action)
 
-        search_action = QAction("Search", self)
+        search_action = QAction(QIcon("icons/search.png"), "Search", self)
         search_action.triggered.connect(self.search_student)
         edit_menu_bar.addAction(search_action)
 
@@ -34,6 +34,7 @@ class MainWindow(QMainWindow):
         self.addToolBar(toolbar)
         toolbar.setMovable(True)
         toolbar.addAction(add_student_action)
+        toolbar.addAction(search_action)
 
         # Create Table
         self.table = QTableWidget()
