@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QApplication, QPushButton, QLineEdit, QComboBox, QLabel, QMainWindow,
-                             QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout)
+                             QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar)
 from PyQt6.QtGui import QAction
 import sys
 import sqlite3
@@ -12,10 +12,12 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Student Management System")
         self.resize(800, 600)
 
+        # Add MenuBar
         file_menu_bar = self.menuBar().addMenu("&File")
         help_menu_bar = self.menuBar().addMenu("&Help")
         edit_menu_bar = self.menuBar().addMenu("&Edit")
 
+        # Add Actions
         add_student_action = QAction("Add Student", self)
         add_student_action.triggered.connect(self.insert_student)
         file_menu_bar.addAction(add_student_action)
@@ -27,6 +29,7 @@ class MainWindow(QMainWindow):
         search_action.triggered.connect(self.search_student)
         edit_menu_bar.addAction(search_action)
 
+        # Create Table
         self.table = QTableWidget()
         self.table.setColumnCount(4)
         self.table.setHorizontalHeaderLabels(("Id", "Name", "Course", "Mobile No"))
