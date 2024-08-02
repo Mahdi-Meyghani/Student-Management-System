@@ -7,6 +7,16 @@ import sys
 import sqlite3
 
 
+class DataBase:
+    def __init__(self, db_path="database.db"):
+        self.connection = None
+        self.db_path = db_path
+
+    def connect(self):
+        self.connection = sqlite3.connect(self.db_path)
+        return self.connection
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -73,7 +83,7 @@ class MainWindow(QMainWindow):
         self.statusbar.addWidget(delete_button)
 
     def load_data(self):
-        conn = sqlite3.connect("database.db")
+        conn = DataBase().connect()
         result = conn.execute("SELECT * FROM students")
         self.table.setRowCount(0)
 
@@ -157,7 +167,7 @@ class EditDialog(QDialog):
         self.setLayout(vbox)
 
     def update_student(self):
-        conn = sqlite3.connect("database.db")
+        conn = DataBase().connect()
         cursor = conn.cursor()
         cursor.execute("UPDATE students SET name = ?, course = ?, mobile = ? WHERE id = ?",
                        (self.name_line_edit.text().title(),
@@ -200,7 +210,7 @@ class DeleteDialog(QDialog):
         index = window.table.currentRow()
         id_num = window.table.item(index, 0).text()
 
-        conn = sqlite3.connect("database.db")
+        conn = DataBase().connect()
         cur = conn.cursor()
         cur.execute("DELETE FROM students WHERE id = ?", (id_num, ))
         conn.commit()
@@ -251,7 +261,7 @@ class InsertDialog(QDialog):
         course = self.courses.currentText()
         mobile = self.mobile_line_edit.text()
 
-        conn = sqlite3.connect("database.db")
+        conn = DataBase().connect()
         cur = conn.cursor()
         cur.execute("INSERT INTO students(name, course, mobile) VALUES (?, ?, ?)",
                     (name, course, mobile))
