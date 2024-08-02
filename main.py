@@ -12,6 +12,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Student Management System")
         self.resize(800, 600)
+        self.setStyleSheet("QPushButton { background-color: green }")
 
         # Add MenuBar
         file_menu_bar = self.menuBar().addMenu("&File")
@@ -103,6 +104,7 @@ class AboutDialog(QMessageBox):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("About")
+        self.setStyleSheet("QPushButton { background-color: green }")
         content = """
         A desktop PyQt6 GUI app for managing 
         university student data with an SQL database backend.
@@ -116,6 +118,7 @@ class EditDialog(QDialog):
         super().__init__()
         self.setWindowTitle("Update Student Data")
         self.resize(300, 300)
+        self.setStyleSheet("QPushButton { background-color: green }")
         vbox = QVBoxLayout()
 
         # Get index of the selected row
@@ -171,6 +174,7 @@ class DeleteDialog(QDialog):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Delete Student Data")
+        self.setStyleSheet("QPushButton { background-color: green }")
         layout = QGridLayout()
 
         message = QLabel("Are you sure you wanna delete this record?")
@@ -208,6 +212,7 @@ class InsertDialog(QDialog):
         super().__init__()
         self.setWindowTitle("Insert Student Data")
         self.resize(300, 300)
+        self.setStyleSheet("QPushButton { background-color: green }")
         vbox = QVBoxLayout()
 
         self.name_line_edit = QLineEdit()
@@ -249,8 +254,9 @@ class SearchDialog(QDialog):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Search Student")
-        vbox = QVBoxLayout()
         self.resize(300, 300)
+        self.setStyleSheet("QPushButton { background-color: green }")
+        vbox = QVBoxLayout()
         self.name_line_edit = QLineEdit()
         self.name_line_edit.setPlaceholderText("Name")
         vbox.addWidget(self.name_line_edit)
@@ -268,9 +274,9 @@ class SearchDialog(QDialog):
             window.table.item(item.row(), 1).setSelected(True)
 
 
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setStyleSheet("QStatusBar::item { border: 0px solid black };")
     window = MainWindow()
     window.load_data()
     window.show()
