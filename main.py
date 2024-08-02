@@ -25,7 +25,7 @@ class MainWindow(QMainWindow):
         about_action = QAction("About", self)
         help_menu_bar.addAction(about_action)
 
-        search_action = QAction(QIcon("icons/search.png"), "Search", self)
+        search_action = QAction(QIcon("icons/search.png"), "Search Student", self)
         search_action.triggered.connect(self.search_student)
         edit_menu_bar.addAction(search_action)
 
@@ -33,6 +33,7 @@ class MainWindow(QMainWindow):
         toolbar = QToolBar()
         self.addToolBar(toolbar)
         toolbar.setMovable(True)
+
         toolbar.addAction(add_student_action)
         toolbar.addAction(search_action)
 
@@ -92,6 +93,7 @@ class InsertDialog(QDialog):
 
     def add_student(self):
         name = self.name_line_edit.text()
+        name = name.title()
         course = self.courses.currentText()
         mobile = self.mobile_line_edit.text()
 
