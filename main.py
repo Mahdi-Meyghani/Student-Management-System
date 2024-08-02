@@ -203,10 +203,10 @@ class DeleteDialog(QDialog):
         window.load_data()
         self.close()
 
-        confirmation = QMessageBox()
-        confirmation.setWindowTitle("Deleted")
-        confirmation.setText("The record has been deleted successfully from the database.")
-        confirmation.exec()
+        confirmation_box = QMessageBox()
+        confirmation_box.setWindowTitle("Deleted")
+        confirmation_box.setText("The record has been deleted successfully from the database.")
+        confirmation_box.exec()
 
     def delete_window(self):
         self.close()
@@ -253,6 +253,12 @@ class InsertDialog(QDialog):
         cur.close()
         conn.close()
         window.load_data()
+        self.close()
+
+        confirmation_box = QMessageBox()
+        confirmation_box.setWindowTitle("Inserted")
+        confirmation_box.setText("The record has been inserted successfully.")
+        confirmation_box.exec()
 
 
 class SearchDialog(QDialog):
