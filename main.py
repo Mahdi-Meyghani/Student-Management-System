@@ -136,7 +136,17 @@ class EditDialog(QDialog):
         self.setLayout(vbox)
 
     def update_student(self):
-        pass
+        conn = sqlite3.connect("database.db")
+        cursor = conn.cursor()
+        cursor.execute("UPDATE students SET name = ?, course = ?, mobile = ? WHERE id = ?",
+                       (self.name_line_edit.text().title(),
+                        self.courses.currentText(),
+                        self.mobile_line_edit.text(),
+                        self.id_num))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        window.load_data()
 
 
 class InsertDialog(QDialog):
