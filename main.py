@@ -16,8 +16,8 @@ class MainWindow(QMainWindow):
 
         # Add MenuBar
         file_menu_bar = self.menuBar().addMenu("&File")
-        help_menu_bar = self.menuBar().addMenu("&Help")
         edit_menu_bar = self.menuBar().addMenu("&Edit")
+        help_menu_bar = self.menuBar().addMenu("&Help")
 
         # Add Actions
         add_student_action = QAction(QIcon("icons/add.png"), "Add Student", self)
@@ -272,6 +272,7 @@ class SearchDialog(QDialog):
         items = window.table.findItems(name, Qt.MatchFlag.MatchFixedString)
         for item in items:
             window.table.item(item.row(), 1).setSelected(True)
+        self.close()
 
 
 if __name__ == "__main__":
