@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QApplication, QPushButton, QLineEdit, QComboBox, QLabel, QMainWindow,
-                             QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar, QStatusBar)
+                             QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar, QStatusBar, QGridLayout)
 from PyQt6.QtGui import QAction, QIcon
 import sys
 import sqlite3
@@ -149,6 +149,23 @@ class EditDialog(QDialog):
         window.load_data()
 
 
+class DeleteDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Delete Student Data")
+        layout = QGridLayout()
+
+        message = QLabel("Are you sure you wanna delete this record?")
+        layout.addWidget(message)
+
+        yes_button = QPushButton("Yes")
+        layout.addWidget(yes_button)
+        no_button = QPushButton("No")
+        layout.addWidget(no_button)
+
+        self.setLayout(layout)
+
+
 class InsertDialog(QDialog):
     def __init__(self):
         super().__init__()
@@ -213,9 +230,6 @@ class SearchDialog(QDialog):
         for item in items:
             window.table.item(item.row(), 1).setSelected(True)
 
-
-class DeleteDialog(QDialog):
-    pass
 
 
 if __name__ == "__main__":
