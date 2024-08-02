@@ -1,6 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (QWidget, QApplication, QPushButton, QLineEdit, QComboBox, QLabel, QMainWindow,
-                             QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar, QStatusBar, QGridLayout)
+                             QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QToolBar, QStatusBar, QGridLayout,
+                             QMessageBox)
 from PyQt6.QtGui import QAction, QIcon
 import sys
 import sqlite3
@@ -159,11 +160,30 @@ class DeleteDialog(QDialog):
         layout.addWidget(message)
 
         yes_button = QPushButton("Yes")
+        yes_button.clicked.connect(self.delete_student)
         layout.addWidget(yes_button)
         no_button = QPushButton("No")
         layout.addWidget(no_button)
 
         self.setLayout(layout)
+
+    def delete_student(self):
+        index = window.table.currentRow()
+        id_num = window.table.item(index, 0).text()
+
+        conn = sqlite3.connect("database.db")
+        cur = conn.cursor()
+        cur.execute("DELETE FROM students WHERE id = ?", (id_num, ))
+        conn.commit()
+        cur.close()
+        conn.close()
+        window.load_data()
+        self.close()
+
+        confirmation = QMessageBox()
+        confirmation.setWindowTitle("Deleted")
+        confirmation.setText("The record has been deleted successfully from the database.")
+        confirmation.exec()
 
 
 class InsertDialog(QDialog):
