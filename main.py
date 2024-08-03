@@ -304,6 +304,7 @@ class SearchDialog(QDialog):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setStyle("Fusion")
     app.setStyleSheet("QStatusBar::item { border: 0px solid black };")
     window = MainWindow()
     window.load_data()
